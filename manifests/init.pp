@@ -1,6 +1,8 @@
 # == Class: ldap
 #
-# Full description of class ldap here.
+# Manage LDAP client configuration.
+#
+# Currently only supports Ubuntu.  Tested on Ubuntu 12.04.
 #
 # === Parameters
 #
@@ -29,13 +31,22 @@
 #
 # === Authors
 #
-# Author Name <author@domain.com>
+# Andrew Leonard
 #
 # === Copyright
 #
-# Copyright 2011 Your name here, unless otherwise noted.
+# Copyright 2012 Andrew Leonard, Seattle Biomedical Research Institute
 #
 class ldap {
 
+  case $::operatingsystem {
+    ubuntu: {
+      $pkgs = [ 'ldap-utils', 'libnss-ldap', 'libpam-krb5' ]
+    }
+    default: {
+      fail("Module ${module_name} is not supported on ${::operatingsystem}")
+    }
+
+  package { $pkgs: ensure => installed }
 
 }
