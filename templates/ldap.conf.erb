@@ -16,7 +16,7 @@
 host<% hosts.each do |host| %> <%=host %><% end %>
 
 # The distinguished name of the search base.
-base <%= base %>
+base <%= @base %>
 
 # Another way to specify your LDAP server is to provide an
 #uri ldapi:///
@@ -33,7 +33,7 @@ ldap_version 3
 # The distinguished name to bind to the server with.
 # Optional: default is to bind anonymously.
 <% if @binddn -%>
-binddn <%= binddn %>
+binddn <%= @binddn %>
 <% else -%>
 #binddn cn=proxyuser,dc=padl,dc=com
 <% end -%>
