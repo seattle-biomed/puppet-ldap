@@ -6,27 +6,21 @@
 #
 # === Parameters
 #
-# Document parameters here.
+# [*base*]
+#   /etc/ldap.conf: The distinguished name of the LDAP search base.
 #
-# [*sample_parameter*]
-#   Explanation of what this parameter affects and what it defaults to.
-#   e.g. "Specify one or more upstream ntp servers as an array."
+# [*binddn*]
+#   /etc/ldap.conf: The distinguished name to bind to the server with.
 #
-# === Variables
-#
-# Here you should define a list of variables that this module would require.
-#
-# [*sample_variable*]
-#   Explanation of how this variable affects the funtion of this class and if it
-#   has a default. e.g. "The parameter enc_ntp_servers must be set by the
-#   External Node Classifier as a comma separated list of hostnames." (Note,
-#   global variables should not be used in preference to class parameters  as of
-#   Puppet 2.6.)
+# [*hosts*]
+#   Array used to populate "host" in /etc/ldap.conf: Your LDAP server. Must be
+#   resolvable without using LDAP. (Note that this module only supports using
+#   "host" and not "uri".)
 #
 # === Examples
 #
 #  class { ldap:
-#    servers => [ 'pool.ntp.org', 'ntp.local.company.com' ]
+#    hosts => [ 'ldap01.example.com', 'ldap02.example.com' ]
 #  }
 #
 # === Authors
@@ -37,7 +31,11 @@
 #
 # Copyright 2012 Andrew Leonard, Seattle Biomedical Research Institute
 #
-class ldap {
+class ldap (
+  $base = 'dc=example,dc=net',
+  $binddn = false,
+  $hosts = [ '127.0.0.1' ]
+  ) {
 
   case $::operatingsystem {
     ubuntu: {
@@ -47,12 +45,11 @@ class ldap {
       fail("Module ${module_name} is not supported on ${::operatingsystem}")
     }
   }
-    
+
   package { $pkgs: ensure => installed }
 
   file { '/etc/ldap.conf':
     ensure  => present,
     content => template('ldap/ldap.conf.erb'),
   }
-  
 }

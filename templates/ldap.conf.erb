@@ -13,13 +13,13 @@
 # space. How long nss_ldap takes to failover depends on
 # whether your LDAP client library supports configurable
 # network or connect timeouts (see bind_timelimit).
-#host 127.0.0.1
+host <% hosts.each do |host| %><%=host %><% end %>
 
 # The distinguished name of the search base.
 base dc=example,dc=net
 
 # Another way to specify your LDAP server is to provide an
-uri ldapi:///
+#uri ldapi:///
 # Unix Domain Sockets to connect to a local LDAP Server.
 #uri ldap://127.0.0.1/
 #uri ldaps://127.0.0.1/   
@@ -32,7 +32,11 @@ ldap_version 3
 
 # The distinguished name to bind to the server with.
 # Optional: default is to bind anonymously.
+<% if @binddn -%>
+binddn <%= binddn %>
+<% else -%>
 #binddn cn=proxyuser,dc=padl,dc=com
+<% end -%>
 
 # The credentials to bind with. 
 # Optional: default is no credential.
