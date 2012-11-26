@@ -40,27 +40,33 @@ binddn <%= @binddn %>
 
 # The credentials to bind with. 
 # Optional: default is no credential.
+<% if @bindpw -%>
+bindpw <%= @bindpw %>
+<% else -%>
 #bindpw secret
+<% end -%>
 
 # The distinguished name to bind to the server with
 # if the effective user ID is root. Password is
 # stored in /etc/ldap.secret (mode 600)
-rootbinddn cn=manager,dc=example,dc=net
+<% if @rootbinddn -%>
+rootbinddn <%= @rootbinddn %>
+<% else -%>
+#rootbinddn cn=manager,dc=example,dc=net
+<% end -%>
 
 # The port.
 # Optional: default is 389.
 #port 389
 
 # The search scope.
-#scope sub
-#scope one
-#scope base
+scope <%= @scope %>
 
 # Search timelimit
-#timelimit 30
+timelimit <%= @timelimit %>
 
 # Bind/connect timelimit
-#bind_timelimit 30
+bind_timelimit <%= @bind_timelimit %>
 
 # Reconnect policy: hard (default) will retry connecting to
 # the software with exponential backoff, soft will fail
