@@ -50,4 +50,9 @@ class ldap {
     
   package { $pkgs: ensure => installed }
 
+  file { '/etc/ldap.conf':
+    ensure  => present,
+    content => template('ldap/ldap.conf.erb'),
+  }
+  
 }
