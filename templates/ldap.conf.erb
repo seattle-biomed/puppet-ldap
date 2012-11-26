@@ -13,10 +13,10 @@
 # space. How long nss_ldap takes to failover depends on
 # whether your LDAP client library supports configurable
 # network or connect timeouts (see bind_timelimit).
-host <% hosts.each do |host| %><%=host %><% end %>
+host<% hosts.each do |host| %> <%=host %><% end %>
 
 # The distinguished name of the search base.
-base dc=example,dc=net
+base <%= base %>
 
 # Another way to specify your LDAP server is to provide an
 #uri ldapi:///
