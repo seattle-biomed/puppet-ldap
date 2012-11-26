@@ -41,7 +41,7 @@ class ldap {
 
   case $::operatingsystem {
     ubuntu: {
-      $pkgs = [ 'ldap-utils', 'libnss-ldap', 'libpam-krb5' ]
+      $pkgs = [ 'ldap-utils', 'libnss-ldap' ]
     }
     default: {
       fail("Module ${module_name} is not supported on ${::operatingsystem}")
