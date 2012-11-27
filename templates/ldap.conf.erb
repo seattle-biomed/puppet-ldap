@@ -79,10 +79,14 @@ bind_policy <%= @bind_policy %>
 #idle_timelimit 3600
 
 # Filter to AND with uid=%s
+<% if @pam_filter -%>
+pam_filter <%= @pam_filter %>
+<% else -%>
 #pam_filter objectclass=account
+<% end -%>
 
 # The user ID attribute (defaults to uid)
-#pam_login_attribute uid
+pam_login_attribute <%= pam_login_attribute %>
 
 # Search the root DSE for the password policy (works
 # with Netscape Directory Server)
@@ -117,7 +121,6 @@ pam_member_attribute <%= @pam_member_attribute %>
 # Template login attribute, default template user
 # (can be overriden by value of former attribute
 # in user's entry)
-#pam_login_attribute userPrincipalName
 #pam_template_login_attribute uid
 #pam_template_login nobody
 
@@ -126,7 +129,11 @@ pam_password <%= pam_passwd %>
 
 # Redirect users to a URL or somesuch on password
 # changes.
+<% if @pam_password_prohibit_message -%>
+pam_password_prohibit_message <%= @pam_password_prohibit_message %>
+<% else -%>
 #pam_password_prohibit_message Please visit http://internal to change your password.
+<% end -%>
 
 # RFC2307bis naming contexts
 # Syntax:
@@ -159,69 +166,37 @@ pam_password <%= pam_passwd %>
 <% if @map_posixAccount -%>
 nss_map_objectclass posixAccount <%= @map_posixAccount %>
 <% end -%>
+<% if @map_shadowAccount -%>
+nss_map_objectclass shadowAccount <%= @map_shadowAccount %>
+<% end -%>
+<% if @map_posixGroup -%>
+nss_map_objectclass posixGroup <%= @map_posixGroup %>
+<% end -%>
 
-# configure --enable-nds is no longer supported.
-# NDS mappings
-#nss_map_attribute uniqueMember member
-
-# Services for UNIX 3.5 mappings
-#nss_map_objectclass posixAccount User
-#nss_map_objectclass shadowAccount User
-#nss_map_attribute uid msSFU30Name
-#nss_map_attribute uniqueMember msSFU30PosixMember
-#nss_map_attribute userPassword msSFU30Password
-#nss_map_attribute homeDirectory msSFU30HomeDirectory
-#nss_map_attribute homeDirectory msSFUHomeDirectory
-#nss_map_objectclass posixGroup Group
-#pam_login_attribute msSFU30Name
-#pam_filter objectclass=User
-#pam_password ad
-
-# configure --enable-mssfu-schema is no longer supported.
-# Services for UNIX 2.0 mappings
-#nss_map_objectclass posixAccount User
-#nss_map_objectclass shadowAccount user
-#nss_map_attribute uid msSFUName
-#nss_map_attribute uniqueMember posixMember
-#nss_map_attribute userPassword msSFUPassword
-#nss_map_attribute homeDirectory msSFUHomeDirectory
-#nss_map_attribute shadowLastChange pwdLastSet
-#nss_map_objectclass posixGroup Group
-#nss_map_attribute cn msSFUName
-#pam_login_attribute msSFUName
-#pam_filter objectclass=User
-#pam_password ad
-
-# RFC 2307 (AD) mappings
-#nss_map_objectclass posixAccount user
-#nss_map_objectclass shadowAccount user
-#nss_map_attribute uid sAMAccountName
-#nss_map_attribute homeDirectory unixHomeDirectory
-#nss_map_attribute shadowLastChange pwdLastSet
-#nss_map_objectclass posixGroup group
-#nss_map_attribute uniqueMember member
-#pam_login_attribute sAMAccountName
-#pam_filter objectclass=User
-#pam_password ad
-
-# configure --enable-authpassword is no longer supported
-# AuthPassword mappings
-#nss_map_attribute userPassword authPassword
-
-# AIX SecureWay mappings
-#nss_map_objectclass posixAccount aixAccount
-#nss_base_passwd ou=aixaccount,?one
-#nss_map_attribute uid userName
-#nss_map_attribute gidNumber gid
-#nss_map_attribute uidNumber uid
-#nss_map_attribute userPassword passwordChar
-#nss_map_objectclass posixGroup aixAccessGroup
-#nss_base_group ou=aixgroup,?one
-#nss_map_attribute cn groupName
-#nss_map_attribute uniqueMember member
-#pam_login_attribute userName
-#pam_filter objectclass=aixAccount
-#pam_password clear
+<% if @map_uniqueMember -%>
+nss_map_attribute uniqueMember <%= @map_uniqueMember %>
+<% end -%>
+<% if @map_userPassword -%>
+nss_map_attribute userPassword <%= @map_userPassword %>
+<% end -%>
+<% if @map_homeDirectory -%>
+nss_map_attribute homeDirectory <%= @map_homeDirectory %>
+<% end -%>
+<% if @map_uidNumber -%>
+nss_map_attribute uidNumber <%= @map_uidNumber %>
+<% end -%>
+<% if @map_gidNumber -%>
+nss_map_attribute gidNumber <%= @map_gidNumber %>
+<% end -%>
+<% if @map_loginShell -%>
+nss_map_attribute loginShell <%= @map_loginShell %>
+<% end -%>
+<% if @map_gecos -%>
+nss_map_attribute gecos <%= @map_gecos %>
+<% end -%>
+<% if @map_cn -%>
+nss_map_attribute cn <%= @map_cn %>
+<% end -%>
 
 # Netscape SDK LDAPS
 #ssl on
