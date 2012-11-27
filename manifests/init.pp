@@ -112,6 +112,7 @@ class ldap (
   $map_posixAccount = false,
   $map_posixGroup = false,
   $map_shadowAccount = false,
+  $map_uid = false,
   $map_uidNumber = false,
   $map_uniqueMember = false,
   $map_userPassword = false,
