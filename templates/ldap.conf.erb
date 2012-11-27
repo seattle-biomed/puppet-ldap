@@ -163,6 +163,7 @@ pam_password_prohibit_message <%= @pam_password_prohibit_message %>
 # Syntax:
 #nss_map_attribute	rfc2307attribute	mapped_attribute
 #nss_map_objectclass	rfc2307objectclass	mapped_objectclass
+
 <% if @map_posixAccount -%>
 nss_map_objectclass posixAccount <%= @map_posixAccount %>
 <% end -%>
@@ -173,6 +174,9 @@ nss_map_objectclass shadowAccount <%= @map_shadowAccount %>
 nss_map_objectclass posixGroup <%= @map_posixGroup %>
 <% end -%>
 
+<% if @map_uid -%>
+nss_map_attribute uid <%= @map_uid %>
+<% end -%>
 <% if @map_uniqueMember -%>
 nss_map_attribute uniqueMember <%= @map_uniqueMember %>
 <% end -%>

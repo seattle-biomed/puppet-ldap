@@ -47,6 +47,9 @@
 # [*map_shadowAccount*]
 #   /etc/ldap.conf: shadowAccount objectclass mapping.
 #
+# [*map_uid*]
+#   /etc/ldap.conf: uid attribute mapping.
+#
 # [*map_uidNumber*]
 #   /etc/ldap.conf: uidNumber attribute mapping.
 #
