@@ -23,6 +23,15 @@
 #   resolvable without using LDAP. (Note that this module only supports using
 #   "host" and not "uri".)
 #
+# [*map_posixAccount*]
+#   /etc/ldap.conf: posixAccount objectclass mapping.
+#
+# [*pam_member_attribute*]
+#   /etc/ldap.conf: Group member attribute.
+#
+# [*pam_passwd*]
+#   /etc/ldap.conf: Define method for changing password on LDAP server.
+#
 # [*rootbinddn*]
 #   /etc/ldap.conf: DN to bind to the server with if EUID is 0.
 #
@@ -48,10 +57,14 @@
 #
 class ldap (
   $base = 'dc=example,dc=net',
+  $bind_policy = 'hard',
   $bind_timelimit = 30,
   $binddn = false,
   $bindpw = false,
   $hosts = [ '127.0.0.1' ],
+  $map_posixAccount = false,
+  $pam_member_attribute = 'uniquemember',
+  $pam_passwd = 'md5',
   $rootbinddn = false,
   $scope = 'sub',
   $timelimit = 30

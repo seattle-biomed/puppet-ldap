@@ -71,7 +71,7 @@ bind_timelimit <%= @bind_timelimit %>
 # Reconnect policy: hard (default) will retry connecting to
 # the software with exponential backoff, soft will fail
 # immediately.
-#bind_policy hard
+bind_policy <%= @bind_policy %>
 
 # Idle timelimit; client will close connections
 # (nss_ldap only) if the server has not been contacted
@@ -108,7 +108,7 @@ bind_timelimit <%= @bind_timelimit %>
 #pam_groupdn cn=PAM,ou=Groups,dc=padl,dc=com
 
 # Group member attribute
-#pam_member_attribute uniquemember
+pam_member_attribute <%= @pam_member_attribute %>
 
 # Specify a minium or maximum UID number allowed
 #pam_min_uid 0
@@ -121,40 +121,8 @@ bind_timelimit <%= @bind_timelimit %>
 #pam_template_login_attribute uid
 #pam_template_login nobody
 
-# HEADS UP: the pam_crypt, pam_nds_passwd,
-# and pam_ad_passwd options are no
-# longer supported.
-#
-# Do not hash the password at all; presume
-# the directory server will do it, if
-# necessary. This is the default.
-pam_password md5
-
-# Hash password locally; required for University of
-# Michigan LDAP server, and works with Netscape
-# Directory Server if you're using the UNIX-Crypt
-# hash mechanism and not using the NT Synchronization
-# service. 
-#pam_password crypt
-
-# Remove old password first, then update in
-# cleartext. Necessary for use with Novell
-# Directory Services (NDS)
-#pam_password clear_remove_old
-#pam_password nds
-
-# RACF is an alias for the above. For use with
-# IBM RACF
-#pam_password racf
-
-# Update Active Directory password, by
-# creating Unicode password and updating
-# unicodePwd attribute.
-#pam_password ad
-
-# Use the OpenLDAP password change
-# extended operation to update the password.
-#pam_password exop
+# Method for hashing/changing password on LDAP server.
+pam_password <%= pam_passwd %>
 
 # Redirect users to a URL or somesuch on password
 # changes.
@@ -188,6 +156,9 @@ pam_password md5
 # Syntax:
 #nss_map_attribute	rfc2307attribute	mapped_attribute
 #nss_map_objectclass	rfc2307objectclass	mapped_objectclass
+<% if @map_posixAccount -%>
+nss_map_objectclass posixAccount <%= @map_posixAccount %>
+<% end -%>
 
 # configure --enable-nds is no longer supported.
 # NDS mappings
