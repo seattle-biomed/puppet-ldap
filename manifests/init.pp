@@ -23,6 +23,9 @@
 #   resolvable without using LDAP. (Note that this module only supports using
 #   "host" and not "uri".)
 #
+# [*ignoreusers*]
+#   /etc/ldap.conf: Array of users to populate nss_initgroups_ignoreusers.
+#
 # [*map_cn*]
 #   /etc/ldap.conf: cn attribute mapping.
 #
@@ -104,6 +107,7 @@ class ldap (
   $binddn = false,
   $bindpw = false,
   $hosts = [ '127.0.0.1' ],
+  $ignoreusers = [ 'root' ],
   $map_cn = false,
   $map_gecos = false,
   $map_gidNumber = false,
