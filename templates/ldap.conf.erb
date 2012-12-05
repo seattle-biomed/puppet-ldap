@@ -247,4 +247,4 @@ nss_map_attribute cn <%= @map_cn %>
 # at present and does not support password policy control
 #pam_sasl_mech DIGEST-MD5
 
-nss_initgroups_ignoreusers <% ignoreusers.join(',') %>
+nss_initgroups_ignoreusers <%= ignoreusers.join(',') %>
